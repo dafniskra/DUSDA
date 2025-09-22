@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Présentation de la Formation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+        }
+        .slide {
+            display: none;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        .slide.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8 flex items-center justify-center min-h-screen">
+
+    <div id="presentation-container" class="max-w-4xl w-full bg-white p-8 rounded-xl shadow-lg">
+
+        <!-- Diapositive 1: Page de garde -->
+        <div id="slide-1" class="slide active">
+            <header class="text-center mb-8">
+                <img src="https://placehold.co/150x150/f0f2f5/0a2d52?text=Logo+de+l'école" alt="Logo de l'école" class="mx-auto mb-4 rounded-full border-2 border-gray-200">
+                <h1 class="text-4xl font-bold text-gray-800 mb-2">Présentation de la Formation</h1>
+                <p class="text-xl text-gray-500">Découvrez le contenu détaillé de chaque bloc de cours.</p>
+            </header>
+        </div>
+
+        <!-- Diapositive 2: Mot des directeurs -->
+        <div id="slide-2" class="slide">
+            <h2 class="text-3xl font-bold text-gray-700 mb-4 text-center">Le mot des directeurs</h2>
+            <div class="text-center py-6 px-4 bg-gray-50 rounded-xl border border-gray-200 shadow-md">
+                <p class="text-gray-600 italic mb-6 leading-relaxed">
+                    "Cette formation est exigeante, mais elle est une formidable opportunité pour votre avenir. Le dévouement et la passion que vous y investirez vous ouvriront de nombreuses portes. Nous sommes fiers de vous accueillir."
+                </p>
+                <div class="flex justify-center items-center space-x-8">
+                    <div class="text-center">
+                        <img src="https://placehold.co/100x100/f0f2f5/0a2d52?text=Directeur+1" alt="Photo du directeur 1" class="rounded-full w-24 h-24 mx-auto mb-2 border-2 border-gray-300">
+                        <p class="text-sm text-gray-500">Nom du directeur</p>
+                    </div>
+                    <div class="text-center">
+                        <img src="https://placehold.co/100x100/f0f2f5/0a2d52?text=Directeur+2" alt="Photo du directeur 2" class="rounded-full w-24 h-24 mx-auto mb-2 border-2 border-gray-300">
+                        <p class="text-sm text-gray-500">Nom de la directrice</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Diapositive 3: Gestionnaires de formation -->
+        <div id="slide-3" class="slide">
+            <h3 class="text-3xl font-bold text-gray-700 border-b-2 border-gray-400 pb-2 mb-4 text-center">Vos gestionnaires de formation</h3>
+            <p class="text-gray-600 italic mb-6 text-center">
+                Pour toute question sur l'organisation des cours ou votre parcours, n'hésitez pas à les contacter.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center items-center space-y-8 sm:space-y-0 sm:space-x-8">
+                <div class="text-center">
+                    <img src="https://placehold.co/100x100/e0e0e0/555?text=Madama+Henrion" alt="Photo de Madame Virag Henrion" class="rounded-full w-24 h-24 mx-auto mb-2 border-2 border-gray-300">
+                    <p class="text-sm text-gray-500">Madama Virag HENRION</p>
+                </div>
+                <div class="text-center">
+                    <img src="https://placehold.co/100x100/e0e0e0/555?text=Tigran+Aroutiounov" alt="Photo de Tigran Aroutiounov" class="rounded-full w-24 h-24 mx-auto mb-2 border-2 border-gray-300">
+                    <p class="text-sm text-gray-500">Tigran Aroutiounov</p>
+                </div>
+            </div>
+            <div class="text-center mt-8">
+                <p class="text-gray-700 font-semibold">Contact :</p>
+                <a href="mailto:sorbonnedataanalytics@univ-paris1.fr" class="text-blue-600 hover:underline">sorbonnedataanalytics@univ-paris1.fr</a>
+            </div>
+        </div>
+
+        <!-- Diapositive 4: Bloc 1: Remise à niveau -->
+        <div id="slide-4" class="slide">
+            <h3 class="text-3xl font-bold text-blue-800 border-b-2 border-blue-500 pb-2 mb-4">Remise à niveau</h3>
+            <p class="text-gray-600 mb-6">
+                Ce bloc est conçu pour construire une base solide, essentielle avant d'aborder les concepts plus avancés de la formation.
+            </p>
+            <ul class="text-sm text-gray-700 list-disc list-inside space-y-4">
+                <li><strong class="text-gray-900">SQL (B4U21420)</strong> : Apprenez les fondamentaux des bases de données relationnelles.</li>
+                <li><strong class="text-gray-900">Python (B4U20320)</strong> : Une introduction au langage de programmation Python, en mettant l'accent sur les structures de données, la syntaxe de base, le contrôle de flux et la création de fonctions.</li>
+                <li><strong class="text-gray-900">Introduction à Java</strong> : Ce cours présente les concepts de la programmation orientée objet avec Java.</li>
+                <li><strong class="text-gray-900">Statistique (B4U20920)</strong> : Découvrez les principes de la statistique descriptive et inférentielle.</li>
+            </ul>
+        </div>
+
+        <!-- Diapositive 5: Bloc 2: Apprentissage de Python -->
+        <div id="slide-5" class="slide">
+            <h3 class="text-3xl font-bold text-green-800 border-b-2 border-green-500 pb-2 mb-4">Apprentissage de Python</h3>
+            <p class="text-gray-600 mb-6">
+                Ce bloc se concentre sur l'application de Python à des tâches concrètes de gestion et d'analyse de données.
+            </p>
+            <ul class="text-sm text-gray-700 list-disc list-inside space-y-4">
+                <li><strong class="text-gray-900">Data Management, Dataviz, Data Mining (B4U20522)</strong> : Utilisez les bibliothèques Python comme <strong class="text-gray-900">Pandas</strong> et <strong class="text-gray-900">Numpy</strong> pour manipuler, nettoyer et analyser des ensembles de données volumineux.</li>
+                <li><strong class="text-gray-900">Python avancé (Web Scrapping + API) (B4U20522)</strong> : Plongez dans les techniques de collecte de données sur le web. Ce cours vous formera au <strong class="text-gray-900">web scraping</strong> et à l'utilisation des <strong class="text-gray-900">API</strong>.</li>
+            </ul>
+        </div>
+
+        <!-- Diapositive 6: Bloc 3: Cloud -->
+        <div id="slide-6" class="slide">
+            <h3 class="text-3xl font-bold text-yellow-800 border-b-2 border-yellow-500 pb-2 mb-4">Cloud</h3>
+            <p class="text-gray-600 mb-6">
+                Ce bloc est dédié aux technologies de calcul distribué et aux bases de données modernes, essentielles dans le monde du Big Data.
+            </p>
+            <ul class="text-sm text-gray-700 list-disc list-inside space-y-4">
+                <li><strong class="text-gray-900">Framework de calcul distribué/spark (Cloud 1) (B4U20822)</strong> : Ce cours vous initiera aux principes du calcul distribué et à l'utilisation de <strong class="text-gray-900">Apache Spark</strong> pour le traitement de données à grande échelle.</li>
+                <li><strong class="text-gray-900">Développement Java Neo4J (Cloud 2) (B4U20722)</strong> : Apprenez à concevoir et à interagir avec des bases de données orientées graphe à l'aide de <strong class="text-gray-900">Neo4J</strong> et de Java.</li>
+                <li><strong class="text-gray-900">Data Streaming (Cloud 3) (B4U21022)</strong> : Explorez les concepts du traitement de données en temps réel.</li>
+            </ul>
+        </div>
+
+        <!-- Diapositive 7: Bloc 4: Modélisation et CI/CD -->
+        <div id="slide-7" class="slide">
+            <h3 class="text-3xl font-bold text-purple-800 border-b-2 border-purple-500 pb-2 mb-4">Modélisation et CI/CD</h3>
+            <p class="text-gray-600 mb-6">
+                Ce bloc est axé sur la création, l'évaluation et le déploiement de modèles d'apprentissage automatique.
+            </p>
+            <ul class="text-sm text-gray-700 list-disc list-inside space-y-4">
+                <li><strong class="text-gray-900">Machine Learning 1 (B4U21322)</strong> : Une introduction au <strong class="text-gray-900">Machine Learning</strong> couvrant les algorithmes de base pour la classification, la régression et le clustering.</li>
+                <li><strong class="text-gray-900">Machine Learning 2 (B4U21522)</strong> : Approfondissez les concepts du Machine Learning avec des algorithmes plus avancés.</li>
+                <li><strong class="text-gray-900">Deep Learning (B4U20422)</strong> : Plongez dans les réseaux de neurones pour des tâches complexes comme la reconnaissance d'images.</li>
+                <li><strong class="text-gray-900">ML Ops (B4U20222)</strong> : Apprenez à gérer le cycle de vie des projets de Machine Learning et l'<strong class="text-gray-900">intégration continue et du déploiement continu (CI/CD)</strong>.</li>
+                <li><strong class="text-gray-900">Generative AI (B4U20622)</strong> : Découvrez les modèles d'<strong class="text-gray-900">IA Générative</strong> et leurs applications.</li>
+            </ul>
+        </div>
+
+        <!-- Diapositive 8: Bloc 5: Séminaire Pro -->
+        <div id="slide-8" class="slide">
+            <h3 class="text-3xl font-bold text-red-800 border-b-2 border-red-500 pb-2 mb-4">Séminaire Pro</h3>
+            <p class="text-gray-600 mb-6">
+                Ce bloc est une préparation directe au monde professionnel, en se concentrant sur les outils et les compétences pratiques.
+            </p>
+            <ul class="text-sm text-gray-700 list-disc list-inside space-y-4">
+                <li><strong class="text-gray-900">Séminaire Pro "PowerBI" (B4U21120)</strong> : Maîtrisez l'outil de Business Intelligence de Microsoft.</li>
+                <li><strong class="text-gray-900">Séminaire Pro (B4U21420)</strong> : Un séminaire généraliste axé sur le développement des compétences professionnelles.</li>
+            </ul>
+        </div>
+        
+        <!-- Diapositive 9: Stages -->
+        <div id="slide-9" class="slide">
+            <h3 class="text-3xl font-bold text-gray-800 border-b-2 border-gray-500 pb-2 mb-4">Stages</h3>
+            <p class="text-gray-600 mb-6">
+                Un stage est un élément clé de votre formation, il vous permettra d'appliquer concrètement vos acquis dans le monde professionnel.
+            </p>
+            <div class="flex justify-center items-center py-8">
+                <img src="https://placehold.co/200x200/e0e0e0/555?text=Icône+Stage" alt="Icône de stage" class="w-32 h-32 rounded-lg border-2 border-gray-300">
+            </div>
+            <p class="text-gray-700 font-semibold mt-4">Pour toute question sur les stages, contactez-nous par mail :</p>
+            <a href="mailto:sorbonnedataanalytics@univ-paris1.fr" class="text-blue-600 hover:underline">sorbonnedataanalytics@univ-paris1.fr</a>
+        </div>
+        
+        <!-- Diapositive 10: Mémoires -->
+        <div id="slide-10" class="slide">
+            <h3 class="text-3xl font-bold text-gray-800 border-b-2 border-gray-500 pb-2 mb-4">Mémoires</h3>
+            <p class="text-gray-600 mb-6">
+                Le mémoire est l'aboutissement de votre parcours, une occasion unique de prouver votre capacité à mener un projet de recherche de A à Z. Vous avez deux options :
+            </p>
+            <div class="space-y-6">
+                <div class="bg-gray-50 p-6 rounded-lg border-l-4 border-gray-400">
+                    <h4 class="text-xl font-semibold mb-2 text-gray-800">1. Proposer votre propre sujet</h4>
+                    <p class="text-gray-700">
+                        Vous pouvez choisir un sujet qui vous passionne, en accord avec l'un de nos professeurs. C'est l'opportunité de vous spécialiser sur un thème qui vous intéresse particulièrement.
+                    </p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg border-l-4 border-gray-400">
+                    <h4 class="text-xl font-semibold mb-2 text-gray-800">2. Choisir un sujet proposé</h4>
+                    <p class="text-gray-700">
+                        La faculté met à votre disposition une liste de sujets de recherche. Vous pouvez choisir un sujet parmi cette liste et être encadré par un expert du domaine.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contrôles de navigation et compteur -->
+        <div class="mt-8 flex justify-between items-center">
+            <button id="prevBtn" class="bg-gray-200 text-gray-700 font-semibold py-2 px-6 rounded-full shadow-md hover:bg-gray-300 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                Précédent
+            </button>
+            <span id="slide-counter" class="text-gray-500 font-semibold">1 / 10</span>
+            <button id="nextBtn" class="bg-blue-600 text-white font-semibold py-2 px-6 rounded-full shadow-md hover:bg-blue-700 transition-colors duration-300">
+                Suivant
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const slideCounter = document.getElementById('slide-counter');
+        let currentSlide = 0;
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) {
+                    slide.classList.add('active');
+                }
+            });
+            updateButtons();
+            updateCounter();
+        }
+
+        function updateButtons() {
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === totalSlides - 1;
+        }
+
+        function updateCounter() {
+            slideCounter.textContent = `${currentSlide + 1} / ${totalSlides}`;
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        });
+
+        // Initialisation
+        showSlide(currentSlide);
+    </script>
+
+</body>
+</html>
