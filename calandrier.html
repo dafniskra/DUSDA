@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendrier des Cours</title>
+    <style>
+        :root {
+            /* Couleurs pour les cours de Remise à niveau */
+            --color-sql: #4285F4;
+            --color-python-intro: #34A853;
+            --color-java: #F29900;
+            --color-statistique: #C41864;
+
+            /* Couleurs pour les cours de Python Avancé */
+            --color-dataviz: #00BFA5;
+            --color-python-avance: #1E88E5;
+
+            /* Couleurs pour les cours de Cloud */
+            --color-spark: #FF6F00;
+            --color-neo4j: #6A1B9A;
+            --color-data-streaming: #009688;
+
+            /* Couleurs pour les cours de Modélisation et CI/CD */
+            --color-ml1: #D81B60;
+            --color-ml2: #6A1B9A;
+            --color-deep-learning: #FF5252;
+            --color-ml-ops: #388E3C;
+            --color-gen-ai: #1E88E5;
+
+            /* Couleurs pour les cours de Séminaire Pro */
+            --color-powerbi: #007BB6;
+            --color-seminaire-pro: #8E24AA;
+
+            /* Couleurs pour les événements spéciaux */
+            --color-soutenance: #FF5722;
+            --color-suivi: #757575;
+            --color-feedback: #4CAF50;
+            --color-mini-soutenance: #FFC107; /* Nouvelle couleur pour les mini soutenances */
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .calendar-container {
+            max-width: 1200px;
+            margin: auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+
+        h1 {
+            color: #0a2d52;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        h2 {
+            color: #0b4975;
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 2em;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: #007bb6;
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        .calendar {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            margin-bottom: 30px;
+        }
+
+        .calendar th, .calendar td {
+            border: 1px solid #e0e0e0;
+            padding: 10px;
+            text-align: left;
+            vertical-align: top;
+            height: 120px;
+            background-color: #f9f9f9;
+            transition: background-color 0.3s;
+        }
+
+        .calendar th {
+            background-color: #005a9c;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .calendar td:hover {
+            background-color: #eaf6ff;
+        }
+
+        .day-number {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 5px;
+            display: block;
+            color: #555;
+        }
+
+        .course {
+            border-radius: 6px;
+            padding: 8px;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+            line-height: 1.4;
+            color: #333;
+            border-left: 5px solid;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .course:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Couleurs des cours */
+        .sql { border-color: var(--color-sql); background-color: rgba(66, 133, 244, 0.2); }
+        .python-intro { border-color: var(--color-python-intro); background-color: rgba(52, 168, 83, 0.2); }
+        .java { border-color: var(--color-java); background-color: rgba(242, 153, 0, 0.2); }
+        .statistique { border-color: var(--color-statistique); background-color: rgba(196, 24, 100, 0.2); }
+        .dataviz { border-color: var(--color-dataviz); background-color: rgba(0, 191, 165, 0.2); }
+        .python-avance { border-color: var(--color-python-avance); background-color: rgba(30, 136, 229, 0.2); }
+        .spark { border-color: var(--color-spark); background-color: rgba(255, 111, 0, 0.2); }
+        .neo4j { border-color: var(--color-neo4j); background-color: rgba(106, 27, 154, 0.2); }
+        .data-streaming { border-color: var(--color-data-streaming); background-color: rgba(0, 150, 136, 0.2); }
+        .ml1 { border-color: var(--color-ml1); background-color: rgba(216, 27, 96, 0.2); }
+        .ml2 { border-color: var(--color-ml2); background-color: rgba(106, 27, 154, 0.2); }
+        .deep-learning { border-color: var(--color-deep-learning); background-color: rgba(255, 82, 82, 0.2); }
+        .ml-ops { border-color: var(--color-ml-ops); background-color: rgba(56, 142, 60, 0.2); }
+        .gen-ai { border-color: var(--color-gen-ai); background-color: rgba(30, 136, 229, 0.2); }
+        .powerbi { border-color: var(--color-powerbi); background-color: rgba(0, 123, 182, 0.2); }
+        .seminaire-pro { border-color: var(--color-seminaire-pro); background-color: rgba(142, 36, 170, 0.2); }
+
+        /* Couleurs pour les statuts */
+        .soutenance { border-color: var(--color-soutenance); background-color: rgba(255, 87, 34, 0.2); }
+        .suivi { border-color: var(--color-suivi); background-color: rgba(117, 117, 117, 0.2); }
+        .feedback { border-color: var(--color-feedback); background-color: rgba(76, 175, 80, 0.2); }
+        .mini-soutenance { border-color: var(--color-mini-soutenance); background-color: rgba(255, 193, 7, 0.2); } /* Nouvelle couleur pour les mini soutenances */
+
+        .empty-day {
+            background-color: #fbfbfb;
+        }
+
+        @media (max-width: 768px) {
+            .calendar th, .calendar td {
+                padding: 5px;
+                height: 80px;
+                font-size: 0.8em;
+            }
+            .day-number { font-size: 1em; }
+            .course { font-size: 0.7em; }
+            .calendar th:nth-child(6), .calendar td:nth-child(6), .calendar th:nth-child(7), .calendar td:nth-child(7) {
+                display: none; /* Cache Samedi et Dimanche sur mobile pour un meilleur affichage */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="calendar-container">
+        <h1>Calendrier Académique</h1>
+
+        <!-- Octobre 2025 -->
+        <h2>Octobre 2025</h2>
+        <table class="calendar">
+            <thead>
+                <tr>
+                    <th>Lundi</th><th>Mardi</th><th>Mercredi</th><th>Jeudi</th><th>Vendredi</th><th>Samedi</th><th>Dimanche</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="empty-day"></td><td class="empty-day"></td>
+                    <td>
+                        <span class="day-number">1</span>
+                    </td>
+                    <td>
+                        <span class="day-number">2</span>
+                    </td>
+                    <td>
+                        <span class="day-number">3</span>
+                    </td>
+                    <td>
+                        <span class="day-number">4</span>
+                    </td>
+                    <td class="empty-day"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="day-number">6</span>
+                        <div class="course sql">SQL<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">7</span>
+                        <div class="course python-intro">Python<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">8</span>
+                        <div class="course sql">SQL<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">9</span>
+                        <div class="course python-intro">Python<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">10</span>
+                        <div class="course sql">SQL<br>(18h-20h30)</div>
+                    </td>
+                    <td class="empty-day"></td>
+                    <td class="empty-day"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="day-number">13</span>
+                        <div class="course java">Introduction à Java<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">14</span>
+                        <div class="course java">Introduction à Java<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">15</span>
+                        <div class="course python-intro">Python<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">16</span>
+                        <div class="course dataviz">Data Management<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">17</span>
+                        <div class="course dataviz">Data Management<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">18</span>
+                    </td>
+                    <td class="empty-day"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="day-number">20</span>
+                        <div class="course java">Introduction à Java<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">21</span>
+                        <div class="course java">Introduction à Java<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">22</span>
+                        <div class="course suivi">Suivi Projet SQL<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">23</span>
+                        <div class="course dataviz">Data Management<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">24</span>
+                        <div class="course dataviz">Data Management<br>(18h-20h30)</div>
+                    </td>
+                    <td class="empty-day"></td>
+                    <td class="empty-day"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="day-number">27</span>
+                        <div class="course dataviz">Data Management<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">28</span>
+                        <div class="course dataviz">Data Management<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">29</span>
+                        <div class="course spark">Spark (Cloud 1)<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">30</span>
+                        <div class="course dataviz">Data Management<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">31</span>
+                        <div class="course dataviz">Data Management<br>(18h-20h30)</div>
+                    </td>
+                    <td class="empty-day"></td>
+                    <td class="empty-day"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Novembre 2025 -->
+        <h2>Novembre 2025</h2>
+        <table class="calendar">
+            <thead>
+                <tr>
+                    <th>Lundi</th><th>Mardi</th><th>Mercredi</th><th>Jeudi</th><th>Vendredi</th><th>Samedi</th><th>Dimanche</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <span class="day-number">3</span>
+                        <div class="course python-avance">Python avancé<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">4</span>
+                        <div class="course python-avance">Python avancé<br>(18h-20h30)</div>
+                        <div class="course spark">Spark (Cloud 1)<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">5</span>
+                        <div class="course spark">Spark (Cloud 1)<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">6</span>
+                        <div class="course statistique">Statistique<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">7</span>
+                        <div class="course statistique">Statistique<br>(18h-20h30)</div>
+                    </td>
+                    <td class="empty-day"></td>
+                    <td class="empty-day"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="day-number">10</span>
+                        <div class="course python-avance">Python avancé<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">11</span>
+                        <div class="course feedback">Feedbacks Projet SQL<br>(18h-20h30)</div>
+                        <div class="course feedback">Feedbacks Projet Python<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">12</span>
+                        <div class="course spark">Spark (Cloud 1)<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">13</span>
+                        <div class="course statistique">Statistique<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">14</span>
+                        <div class="course statistique">Statistique<br>(18h-20h30)</div>
+                    </td>
+                    <td class="empty-day"></td>
+                    <td class="empty-day"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="day-number">17</span>
+                        <div class="course python-avance">Python avancé<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">18</span>
+                        <div class="course python-avance">Python avancé<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">19</span>
+                        <div class="course spark">Spark (Cloud 1)<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">20</span>
+                        <div class="course statistique">Statistique<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">21</span>
+                        <div class="course statistique">Statistique<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">22</span>
+                        <div class="course neo4j">Java Neo4J (Cloud 2)<br>(10h-12h30)</div>
+                    </td>
+                    <td class="empty-day"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="day-number">24</span>
+                    </td>
+                    <td>
+                        <span class="day-number">25</span>
+                        <div class="course suivi">Suivi Projet Data Management<br>(18h-20h30)</div>
+                        <div class="course suivi">Suivi Python avancé<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">26</span>
+                        <div class="course spark">Spark (Cloud 1)<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">27</span>
+                        <div class="course statistique">Statistique<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">28</span>
+                        <div class="course statistique">Statistique<br>(18h-20h30)</div>
+                    </td>
+                    <td class="empty-day"></td>
+                    <td class="empty-day"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Décembre 2025 -->
+        <h2>Décembre 2025</h2>
+        <table class="calendar">
+            <thead>
+                <tr>
+                    <th>Lundi</th><th>Mardi</th><th>Mercredi</th><th>Jeudi</th><th>Vendredi</th><th>Samedi</th><th>Dimanche</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <span class="day-number">1</span>
+                        <div class="course neo4j">Java Neo4J (Cloud 2)<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">2</span>
+                        <div class="course ml1">Machine Learning 1<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">3</span>
+                        <div class="course ml1">Machine Learning 1<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">4</span>
+                    </td>
+                    <td>
+                        <span class="day-number">5</span>
+                        <div class="course neo4j">Java Neo4J (Cloud 2)<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">6</span>
+                        <div class="course neo4j">Java Neo4J (Cloud 2)<br>(10h-12h30)</div>
+                    </td>
+                    <td class="empty-day"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="day-number">8</span>
+                        <div class="course neo4j">Java Neo4J (Cloud 2)<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">9</span>
+                        <div class="course ml1">Machine Learning 1<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">10</span>
+                        <div class="course ml1">Machine Learning 1<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">11</span>
+                        <div class="course suivi">Suivi Projet Data Management<br>(18h-20h30)</div>
+                        <div class="course suivi">Suivi Python avancé<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">12</span>
+                        <div class="course neo4j">Java Neo4J (Cloud 2)<br>(18h-20h30)</div>
+                    </td>
+                    <td class="empty-day"></td>
+                    <td class="empty-day"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="day-number">15</span>
+                        <div class="course suivi">Suivi Projet Statistique<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">16</span>
+                        <div class="course ml1">Machine Learning 1<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">17</span>
+                        <div class="course ml1">Machine Learning 1<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">18</span>
+                        <div class="course soutenance">Soutenances Data Management<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">19</span>
+                        <div class="course soutenance">Soutenances Data Management<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">20</span>
+                    </td>
+                    <td class="empty-day"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="day-number">22</span>
+                        <div class="course soutenance">Soutenances Python avancé<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">23</span>
+                        <div class="course soutenance">Soutenances Python avancé<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">24</span>
+                    </td>
+                    <td>
+                        <span class="day-number">25</span>
+                    </td>
+                    <td>
+                        <span class="day-number">26</span>
+                    </td>
+                    <td>
+                        <span class="day-number">27</span>
+                    </td>
+                    <td class="empty-day"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="day-number">29</span>
+                        <div class="course suivi">Suivi Projet Spark (Cloud 1)<br>(18h-20h30)</div>
+                        <div class="course suivi">Suivi Projet Neo4J (Cloud 2)<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">30</span>
+                    </td>
+                    <td>
+                        <span class="day-number">31</span>
+                    </td>
+                    <td class="empty-day"></td><td class="empty-day"></td><td class="empty-day"></td><td class="empty-day"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Janvier 2026 -->
+        <h2>Janvier 2026</h2>
+        <table class="calendar">
+            <thead>
+                <tr>
+                    <th>Lundi</th><th>Mardi</th><th>Mercredi</th><th>Jeudi</th><th>Vendredi</th><th>Samedi</th><th>Dimanche</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="empty-day"></td><td class="empty-day"></td><td class="empty-day"></td>
+                    <td>
+                        <span class="day-number">1</span>
+                    </td>
+                    <td>
+                        <span class="day-number">2</span>
+                    </td>
+                    <td class="empty-day"></td>
+                    <td class="empty-day"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="day-number">5</span>
+                        <div class="course soutenance">Soutenances Statistique<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">6</span>
+                        <div class="course soutenance">Soutenances Statistique<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">7</span>
+                        <div class="course mini-soutenance">Mini Soutenances ML 1<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">8</span>
+                        <div class="course mini-soutenance">Mini Soutenances ML 1<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">9</span>
+                        <div class="course suivi">Suivi Projet Spark (Cloud 1)<br>(18h-20h30)</div>
+                        <div class="course suivi">Suivi Projet Neo4J (Cloud 2)<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">10</span>
+                        <div class="course powerbi">Séminaire Pro PowerBI<br>(10h-12h30)</div>
+                    </td>
+                    <td class="empty-day"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="day-number">12</span>
+                        <div class="course soutenance">Soutenances Spark<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">13</span>
+                        <div class="course soutenance">Soutenances Spark<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">14</span>
+                    </td>
+                    <td>
+                        <span class="day-number">15</span>
+                        <div class="course ml2">Machine Learning 2<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">16</span>
+                        <div class="course feedback">Feedbacks Data Management<br>(18h-20h30)</div>
+                        <div class="course feedback">Feedbacks Python avancé<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">17</span>
+                        <div class="course powerbi">Séminaire Pro PowerBI<br>(10h-12h30)</div>
+                    </td>
+                    <td class="empty-day"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="day-number">19</span>
+                        <div class="course ml2">Machine Learning 2<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">20</span>
+                        <div class="course powerbi">Séminaire Pro PowerBI<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">21</span>
+                        <div class="course soutenance">Soutenances Java Neo4J<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">22</span>
+                        <div class="course soutenance">Soutenances Java Neo4J<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">23</span>
+                        <div class="course ml2">Machine Learning 2<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">24</span>
+                        <div class="course deep-learning">Deep Learning<br>(10h-12h30)</div>
+                        <div class="course seminaire-pro">Séminaire Pro<br>(10h-12h30)</div>
+                    </td>
+                    <td class="empty-day"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="day-number">26</span>
+                        <div class="course ml2">Machine Learning 2<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">27</span>
+                        <div class="course ml2">Machine Learning 2<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">28</span>
+                        <div class="course ml2">Machine Learning 2<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">29</span>
+                        <div class="course ml2">Machine Learning 2<br>(18h-20h30)</div>
+                        <div class="course neo4j">Java Neo4J (Cloud 2)<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">30</span>
+                        <div class="course ml2">Machine Learning 2<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">31</span>
+                        <div class="course seminaire-pro">Séminaire Pro<br>(10h-12h30)</div>
+                    </td>
+                    <td class="empty-day"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Février 2026 -->
+        <h2>Février 2026</h2>
+        <table class="calendar">
+            <thead>
+                <tr>
+                    <th>Lundi</th><th>Mardi</th><th>Mercredi</th><th>Jeudi</th><th>Vendredi</th><th>Samedi</th><th>Dimanche</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="empty-day"></td><td class="empty-day"></td><td class="empty-day"></td><td class="empty-day"></td><td class="empty-day"></td><td class="empty-day"></td>
+                    <td>
+                        <span class="day-number">1</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="day-number">2</span>
+                        <div class="course deep-learning">Deep Learning<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">3</span>
+                        <div class="course deep-learning">Deep Learning<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">4</span>
+                        <div class="course seminaire-pro">Séminaire Pro<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">5</span>
+                        <div class="course deep-learning">Deep Learning<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">6</span>
+                        <div class="course deep-learning">Deep Learning<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">7</span>
+                        <div class="course seminaire-pro">Séminaire Pro<br>(10h-12h30)</div>
+                    </td>
+                    <td class="empty-day"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="day-number">9</span>
+                        <div class="course mini-soutenance">Mini Soutenances ML 2<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">10</span>
+                        <div class="course mini-soutenance">Mini Soutenances ML 2<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">11</span>
+                        <div class="course feedback">Feedbacks Cloud 1 & 2<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">12</span>
+                        <div class="course seminaire-pro">Séminaire Pro<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">13</span>
+                        <div class="course deep-learning">Deep Learning<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">14</span>
+                        <div class="course seminaire-pro">Séminaire Pro<br>(10h-12h30)</div>
+                    </td>
+                    <td class="empty-day"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="day-number">16</span>
+                        <div class="course ml-ops">ML Ops<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">17</span>
+                        <div class="course ml-ops">ML Ops<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">18</span>
+                        <div class="course data-streaming">Data Streaming<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">19</span>
+                        <div class="course ml-ops">ML Ops<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">20</span>
+                    </td>
+                    <td class="empty-day"></td>
+                    <td class="empty-day"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="day-number">23</span>
+                        <div class="course suivi">Suivi Projet ML 2<br>(18h-20h30)</div>
+                        <div class="course suivi">Suivi Projet Deep Learning<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">24</span>
+                    </td>
+                    <td>
+                        <span class="day-number">25</span>
+                        <div class="course data-streaming">Data Streaming<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">26</span>
+                        <div class="course gen-ai">Generative AI<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">27</span>
+                        <div class="course suivi">Suivi Projet Séminaire Pro<br>(18h-20h30)</div>
+                    </td>
+                    <td class="empty-day"></td>
+                    <td class="empty-day"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Mars 2026 -->
+        <h2>Mars 2026</h2>
+        <table class="calendar">
+            <thead>
+                <tr>
+                    <th>Lundi</th><th>Mardi</th><th>Mercredi</th><th>Jeudi</th><th>Vendredi</th><th>Samedi</th><th>Dimanche</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="empty-day"></td><td class="empty-day"></td><td class="empty-day"></td><td class="empty-day"></td><td class="empty-day"></td><td class="empty-day"></td>
+                    <td>
+                        <span class="day-number">1</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="day-number">2</span>
+                        <div class="course ml-ops">ML Ops<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">3</span>
+                        <div class="course ml-ops">ML Ops<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">4</span>
+                        <div class="course data-streaming">Data Streaming<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">5</span>
+                        <div class="course suivi">Suivi Projet Deep Learning<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">6</span>
+                        <div class="course ml-ops">ML Ops<br>(18h-20h30)</div>
+                    </td>
+                    <td class="empty-day"></td>
+                    <td class="empty-day"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="day-number">9</span>
+                        <div class="course gen-ai">Generative AI<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">10</span>
+                        <div class="course gen-ai">Generative AI<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">11</span>
+                        <div class="course data-streaming">Data Streaming<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">12</span>
+                        <div class="course suivi">Suivi Projet Deep Learning<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">13</span>
+                        <div class="course suivi">Suivi Projet ML 2<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">14</span>
+                        <div class="course suivi">Suivi Projet ML Ops<br>(10h-12h30)</div>
+                        <div class="course suivi">Suivi Projet Séminaire Pro<br>(10h-12h30)</div>
+                    </td>
+                    <td class="empty-day"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="day-number">16</span>
+                        <div class="course soutenance">Soutenances ML 2<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">17</span>
+                        <div class="course soutenance">Soutenances ML 2<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">18</span>
+                        <div class="course data-streaming">Data Streaming<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">19</span>
+                        <div class="course suivi">Suivi Projet Deep Learning<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">20</span>
+                        <div class="course suivi">Suivi Projet ML Ops<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">21</span>
+                    </td>
+                    <td class="empty-day"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="day-number">23</span>
+                        <div class="course soutenance">Soutenances Deep Learning<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">24</span>
+                        <div class="course soutenance">Soutenances Deep Learning<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">25</span>
+                        <div class="course data-streaming">Data Streaming<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">26</span>
+                    </td>
+                    <td>
+                        <span class="day-number">27</span>
+                        <div class="course suivi">Suivi Projet ML Ops<br>(18h-20h30)</div>
+                    </td>
+                    <td class="empty-day"></td>
+                    <td class="empty-day"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="day-number">30</span>
+                    </td>
+                    <td>
+                        <span class="day-number">31</span>
+                        <div class="course suivi">Suivi Projet Generative AI<br>(18h-20h30)</div>
+                    </td>
+                    <td class="empty-day"></td><td class="empty-day"></td><td class="empty-day"></td><td class="empty-day"></td><td class="empty-day"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Avril 2026 -->
+        <h2>Avril 2026</h2>
+        <table class="calendar">
+            <thead>
+                <tr>
+                    <th>Lundi</th><th>Mardi</th><th>Mercredi</th><th>Jeudi</th><th>Vendredi</th><th>Samedi</th><th>Dimanche</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="empty-day"></td><td class="empty-day"></td>
+                    <td>
+                        <span class="day-number">1</span>
+                        <div class="course data-streaming">Data Streaming<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">2</span>
+                        <div class="course soutenance">Soutenances Séminaire Pro<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">3</span>
+                        <div class="course soutenance">Soutenances Séminaire Pro<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">4</span>
+                        <div class="course suivi">Suivi Projet ML Ops<br>(10h-12h30)</div>
+                    </td>
+                    <td class="empty-day"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="day-number">6</span>
+                    </td>
+                    <td>
+                        <span class="day-number">7</span>
+                    </td>
+                    <td>
+                        <span class="day-number">8</span>
+                        <div class="course soutenance">Soutenances ML Ops<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">9</span>
+                        <div class="course soutenance">Soutenances ML Ops<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">10</span>
+                        <div class="course suivi">Suivi Projet Generative AI<br>(18h-20h30)</div>
+                    </td>
+                    <td class="empty-day"></td>
+                    <td class="empty-day"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="day-number">13</span>
+                    </td>
+                    <td>
+                        <span class="day-number">14</span>
+                    </td>
+                    <td>
+                        <span class="day-number">15</span>
+                        <div class="course suivi">Suivi Projet Data Streaming<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">16</span>
+                    </td>
+                    <td>
+                        <span class="day-number">17</span>
+                        <div class="course suivi">Suivi Projet Generative AI<br>(18h-20h30)</div>
+                    </td>
+                    <td class="empty-day"></td>
+                    <td class="empty-day"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="day-number">20</span>
+                        <div class="course soutenance">Soutenances Generative AI<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">21</span>
+                        <div class="course soutenance">Soutenances Generative AI<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">22</span>
+                        <div class="course suivi">Suivi Projet Data Streaming<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">23</span>
+                    </td>
+                    <td>
+                        <span class="day-number">24</span>
+                    </td>
+                    <td>
+                        <span class="day-number">25</span>
+                    </td>
+                    <td class="empty-day"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="day-number">27</span>
+                        <div class="course soutenance">Soutenances Data Streaming<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">28</span>
+                        <div class="course soutenance">Soutenances Data Streaming<br>(18h-20h30)</div>
+                    </td>
+                    <td>
+                        <span class="day-number">29</span>
+                    </td>
+                    <td>
+                        <span class="day-number">30</span>
+                    </td>
+                    <td class="empty-day"></td><td class="empty-day"></td><td class="empty-day"></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</body>
+</html>
